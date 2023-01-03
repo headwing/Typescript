@@ -66,6 +66,7 @@ const Tabs = styled.div`
   gap: 10px;
 `;
 
+// 불리언 값을 가지는 isActive라는 props를 추가!!!
 const Tab = styled.span<{ isActive: boolean }>`
   text-align: center;
   text-transform: uppercase;
@@ -144,7 +145,7 @@ interface PriceData {
 function Coin() {
   const { coinId } = useParams<RouteParams>();
   const { state } = useLocation<RouteState>();
-  const priceMatch = useRouteMatch("/:coinId/price");
+  const priceMatch = useRouteMatch("/:coinId/price"); // 특정한 url에 있으면 object를, 없으면 null
   const chartMatch = useRouteMatch("/:coinId/chart");
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", coinId],
@@ -159,6 +160,7 @@ function Coin() {
     <Container>
       <Header>
         <Title>
+          {/* 홈을 거치지 않고 바로 접속했을 경우 서버에서 주는 이름을 가져다쓰기 위함 */}
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
       </Header>
